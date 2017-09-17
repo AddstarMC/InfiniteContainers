@@ -1,0 +1,19 @@
+name: ${project.name}
+main: au.com.addstar.InfiniteContainer.InfiniteContainer
+version: ${plugin.version}
+website: ${project.url}
+author: Narimm
+description: ${project.description}
+
+commands:
+  icadd:
+    usage: /<command>
+    permission: infinitecontainer.add
+    aliases: [infinitecontaineradd]
+  icremove:
+    usage: /<command>
+    permission: infinitecontainer.icremove
+    aliases: [infinitecontainerremove]
+  iclist:
+    usage: /<command>
+    permission: infinitecontainer.iclist
