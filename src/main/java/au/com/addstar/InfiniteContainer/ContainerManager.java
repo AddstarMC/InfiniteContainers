@@ -1,15 +1,16 @@
 package au.com.addstar.InfiniteContainer;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Container;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -19,33 +20,35 @@ import java.util.List;
 public class ContainerManager {
     private File saveFile;
     private YamlConfiguration config;
-    LinkedHashSet<Location> containers;
+    LinkedHashMap<Location, ItemStack[]> containers;
 
     ContainerManager(File save) {
-        this.containers = new LinkedHashSet<>();
+        this.containers = new LinkedHashMap<>();
         saveFile = save;
         config = new YamlConfiguration();
     }
 
     public LinkedHashSet<Location> getContainers() {
-        return containers;
+        LinkedHashSet<Location> result = new LinkedHashSet<>();
+        for(Map.Entry<Location,ItemStack[]> e: containers.entrySet()){
+            result.add(e.getKey());
+        }
+        return result;
     }
 
     public boolean addContainer(Container container){
-        return addLocation(container.getLocation());
-    }
-
-    boolean addLocation(Location location){
-       return containers.add(location);
+        ItemStack[] contents = container.getSnapshotInventory().getContents().clone();
+        return (containers.put(container.getLocation(),contents)==contents);
     }
 
     public boolean removeContainer(Container container){
-        return containers.remove(container.getLocation());
+        return(containers.remove(container.getLocation())!=null);
+
     }
     public void save(){
 
-        List<Location> out = new ArrayList<>();
-        out.addAll(containers);
+        Map<Location,ItemStack[]> out = new HashMap<>();
+        out.putAll(containers);
         config.set("containers", out);
         try {
             config.save(saveFile);
@@ -58,8 +61,9 @@ public class ContainerManager {
     void load() {
         try {
             config.load(saveFile);
-            List<Location> locs = (List<Location>)config.getList("containers");
-            containers.addAll(locs);
+            Object obj = config.get("containers", new HashMap<Location,ItemStack[]>());
+            Map<Location,ItemStack[]> configContainers = (Map<Location, ItemStack[]>)obj;
+            containers.putAll(configContainers);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
@@ -68,26 +72,23 @@ public class ContainerManager {
     }
 
     public boolean hasContainer(Container container) {
-        return containers.contains(container.getLocation());
+        return containers.containsKey(container.getLocation());
     }
-     public static void refill(Container container) {
+     public void refill(Container container) {
          refill(container,null);
     }
 
-    public static void refill(Container container, ItemStack dispensed){
+    public void refill(Container container, ItemStack dispensed){
         if(dispensed != null) {
-            dispensed.setAmount(container.getInventory().getMaxStackSize());
-            container.getInventory().addItem(dispensed);
-            container.update(true);//force it to update
+            container.getInventory().setContents(containers.get(container.getLocation()));
+            container.update(true);
             return;
         }
-        for(ItemStack item :  container.getInventory()){
-            if(item != null) {
-                int max = item.getMaxStackSize();
-                if (max < 2) max =  container.getInventory().getMaxStackSize();
-                item.setAmount(max);
-            }
+        ItemStack[] orig = containers.get(container.getLocation());
+        for(ItemStack item: orig){
+            item.setAmount(container.getInventory().getMaxStackSize());
         }
+        container.getInventory().setContents(orig);
         container.update(true);//force an update
     }
 

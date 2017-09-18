@@ -21,9 +21,8 @@ public class BlockListeners implements Listener {
     public void onDispenseEvent(BlockDispenseEvent event){
         BlockState state = event.getBlock().getState();
         if(state instanceof Container){
-            Inventory now = ((Container) state).getSnapshotInventory();
             if(plugin.getContainerManager().hasContainer((Container)state)){
-                ContainerManager.refill((Container) state, event.getItem());
+                plugin.getContainerManager().refill((Container) state, event.getItem());
             }
         }
     }

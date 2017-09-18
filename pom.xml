@@ -8,11 +8,11 @@
     <artifactId>InfiniteContainer</artifactId>
     <version>0.9-SNAPSHOT</version>
     <description>A plugin that enables dispensors and droppers to do so infinitely</description>
-    <url>https://addstarmc.github.com/InfiniteDispensers</url>
+    <url>https://github.com/AddstarMC/InfiniteContainers</url>
     <scm>
-        <connection>scm:git:git@github.com:AddstarMC/Pandora.git</connection>
-        <developerConnection>scm:git:git@github.com:AddstarMC/Pandora.git</developerConnection>
-        <url>https://github.com/AddstarMC/pandora</url>
+        <connection>scm:git:git@github.com:AddstarMC/InfiniteContainers.git</connection>
+        <developerConnection>scm:git:git@github.com:AddstarMC/InfiniteContainers.git</developerConnection>
+        <url>https://github.com/AddstarMC/InfiniteContainers</url>
         <tag>HEAD</tag>
     </scm>
     <distributionManagement>

@@ -37,7 +37,7 @@ public class PlayerListeners implements Listener {
                     switch(plugin.getPlayerManager().getPlayerAction(event.getPlayer())){
                         case ADD:
                             if(plugin.getContainerManager().addContainer((Container) state)) {
-                                ContainerManager.refill(((Container) state));
+                                plugin.getContainerManager().refill(((Container) state));
                                 plugin.getPlayerManager().removePlayer(event.getPlayer());
                                 HandlerList.unregisterAll(this);
                                 plugin.getContainerManager().save();
