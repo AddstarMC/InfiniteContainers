@@ -76,7 +76,9 @@ public class ContainerManager {
 
     public static void refill(Container container, ItemStack dispensed){
         if(dispensed != null) {
+            dispensed.setAmount(container.getInventory().getMaxStackSize());
             container.getInventory().addItem(dispensed);
+            container.update(true);//force it to update
             return;
         }
         for(ItemStack item :  container.getInventory()){
@@ -86,6 +88,7 @@ public class ContainerManager {
                 item.setAmount(max);
             }
         }
+        container.update(true);//force an update
     }
 
 }
