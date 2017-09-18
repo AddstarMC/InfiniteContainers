@@ -17,3 +17,7 @@ commands:
   iclist:
     usage: /<command>
     permission: infinitecontainer.iclist
+  icteleport:
+    usage: /<command> <listnumber>
+    permission: infinitecontaner.teleport
+    aliases: [ictel]

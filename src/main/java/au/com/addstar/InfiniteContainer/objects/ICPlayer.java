@@ -15,7 +15,7 @@ public class ICPlayer {
         return action;
     }
 
-    private Player player;
+    private final Player player;
 
     private Action action;
 

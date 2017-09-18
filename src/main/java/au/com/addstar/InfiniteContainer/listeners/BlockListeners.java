@@ -23,7 +23,7 @@ public class BlockListeners implements Listener {
         if(state instanceof Container){
             Inventory now = ((Container) state).getSnapshotInventory();
             if(plugin.getContainerManager().hasContainer((Container)state)){
-                ContainerManager.refill((Container) state,now);
+                ContainerManager.refill((Container) state, event.getItem());
                 state.update();
             }
         }

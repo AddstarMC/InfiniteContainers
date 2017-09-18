@@ -1,23 +1,19 @@
 package au.com.addstar.InfiniteContainer.listeners;
 
 import au.com.addstar.InfiniteContainer.ContainerManager;
-import au.com.addstar.InfiniteContainer.InfiniteContainer;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Container;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static au.com.addstar.InfiniteContainer.InfiniteContainer.plugin;
 
@@ -26,7 +22,7 @@ import static au.com.addstar.InfiniteContainer.InfiniteContainer.plugin;
  * Created by benjamincharlton on 17/09/2017.
  */
 public class PlayerListeners implements Listener {
-    private ArrayList blocks = new ArrayList<>(
+    private final ArrayList blocks = new ArrayList<>(
             Arrays.asList(
                     Material.DISPENSER,
                     Material.DROPPER)
@@ -41,7 +37,7 @@ public class PlayerListeners implements Listener {
                     switch(plugin.getPlayerManager().getPlayerAction(event.getPlayer())){
                         case ADD:
                             if(plugin.getContainerManager().addContainer((Container) state)) {
-                                ContainerManager.refill(((Container) state),((Container) state).getSnapshotInventory());
+                                ContainerManager.refill(((Container) state));
                                 state.update();
                                 plugin.getPlayerManager().removePlayer(event.getPlayer());
                                 HandlerList.unregisterAll(this);

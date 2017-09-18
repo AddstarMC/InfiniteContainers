@@ -4,7 +4,6 @@ import org.bukkit.Location;
 import org.bukkit.block.Container;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.*;
@@ -55,6 +54,7 @@ public class ContainerManager {
         }
     }
 
+    @SuppressWarnings("unchecked")
     void load() {
         try {
             config.load(saveFile);
@@ -67,19 +67,25 @@ public class ContainerManager {
 
     }
 
-    public boolean hasContainer(Container container){
+    public boolean hasContainer(Container container) {
         return containers.contains(container.getLocation());
     }
+     public static void refill(Container container) {
+         refill(container,null);
+    }
 
-    public static void refill(Container container, Inventory i){
-        for(ItemStack item : i){
+    public static void refill(Container container, ItemStack dispensed){
+        if(dispensed != null) {
+            container.getInventory().addItem(dispensed);
+            return;
+        }
+        for(ItemStack item :  container.getInventory()){
             if(item != null) {
                 int max = item.getMaxStackSize();
-                if (max < 2) max = 16;
+                if (max < 2) max =  container.getInventory().getMaxStackSize();
                 item.setAmount(max);
             }
         }
-        container.getInventory().setContents(i.getContents());
     }
 
 }

@@ -2,8 +2,6 @@ package au.com.addstar.InfiniteContainer;
 
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.Container;
 import org.junit.Before;
 import org.junit.Test;
 import java.io.File;
@@ -15,6 +13,7 @@ import static org.powermock.api.mockito.PowerMockito.when;
  * Created for use for the Add5tar MC Minecraft server
  * Created by benjamincharlton on 17/09/2017.
  */
+@SuppressWarnings("unused")
 public class ContainerManagerTest {
     private ContainerManager manager;
     private World world;
@@ -24,7 +23,7 @@ public class ContainerManagerTest {
         assertTrue(manager.containers.size() == 1);
     }
 
-    public void load() throws Exception {
+    public void load() {
         manager.save();
         manager.containers = null;
         manager.load();

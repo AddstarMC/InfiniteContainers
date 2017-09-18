@@ -3,6 +3,7 @@ package au.com.addstar.InfiniteContainer;
 import au.com.addstar.InfiniteContainer.commands.CreateInfiniteContainer;
 import au.com.addstar.InfiniteContainer.commands.ListContainers;
 import au.com.addstar.InfiniteContainer.commands.RemoveInifiniteContainer;
+import au.com.addstar.InfiniteContainer.commands.TeleportToContainer;
 import au.com.addstar.InfiniteContainer.listeners.BlockListeners;
 import au.com.addstar.InfiniteContainer.listeners.PlayerListeners;
 import org.bstats.bukkit.Metrics;
@@ -47,10 +48,12 @@ public class InfiniteContainer extends JavaPlugin {
             this.getServer().getLogger().info("Using fallback language profile no resource for your locale is available");
         }
         pListen = new PlayerListeners();
+        //Register Commands
         this.getServer().getPluginCommand("icadd").setExecutor(new CreateInfiniteContainer(this));
         this.getServer().getPluginCommand("icremove").setExecutor(new RemoveInifiniteContainer(this));
         this.getServer().getPluginCommand("iclist").setExecutor(new ListContainers());
-
+        this.getServer().getPluginCommand("icteleport").setExecutor(new TeleportToContainer());
+        //Register Listeners
         this.getServer().getPluginManager().registerEvents(new BlockListeners(), this);
 
     }

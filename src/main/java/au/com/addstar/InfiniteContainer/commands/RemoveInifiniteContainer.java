@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
  * Created by benjamincharlton on 16/09/2017.
  */
 public class RemoveInifiniteContainer implements CommandExecutor {
-    private InfiniteContainer plugin;
+    private final InfiniteContainer plugin;
 
     public RemoveInifiniteContainer(InfiniteContainer plugin) {
         this.plugin = plugin;

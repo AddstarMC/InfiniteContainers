@@ -20,10 +20,12 @@ public class ListContainers implements CommandExecutor {
         ArrayList<String> message =  new ArrayList<>();
         message.add(plugin.getMessage("ListTitle"));
         message.add("-----------------------------");
+        int i = 1;
         for(Location container : plugin.getContainerManager().getContainers()){
             Location loc = container.getBlock().getLocation();
             Material type = loc.getBlock().getType();
-            message.add(type.name() + " : " + loc.toString() );
+            message.add(i + ") " +type.name() + " : " + loc.toString() );
+            i++;
         }
         message.add("-----------------------------");
         String[] result = new String[message.size()];
