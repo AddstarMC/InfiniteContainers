@@ -6,7 +6,7 @@
 
     <groupId>au.com.addstar</groupId>
     <artifactId>InfiniteContainer</artifactId>
-    <version>0.9-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <description>A plugin that enables dispensors and droppers to do so infinitely</description>
     <url>https://github.com/AddstarMC/InfiniteContainers</url>
     <scm>

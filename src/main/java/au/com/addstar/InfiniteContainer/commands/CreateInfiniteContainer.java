@@ -20,19 +20,18 @@ public class CreateInfiniteContainer implements CommandExecutor {
         this.plugin = plugin;
     }
 
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
+    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if(sender instanceof Player){
             final Player player  = (Player) sender;
-            ICPlayer icPlayer = new ICPlayer(player);
-            icPlayer.setAction(Action.ADD);
+            ICPlayer icPlayer = new ICPlayer(player, Action.ADD, args);
             plugin.getPlayerManager().addPlayer(icPlayer);
             plugin.getServer().getPluginManager().registerEvents(plugin.getPlayerListener(),plugin);
             sender.sendMessage(plugin.getMessage("PlayerActionAdd"));
             PlayerManager.commandTimeOut(sender);
+            return true;
         }else{
             sender.sendMessage(InfiniteContainer.plugin.getMessage("PlayerCommandOnly"));
-            return true;
+            return false;
         }
-        return false;
     }
 }

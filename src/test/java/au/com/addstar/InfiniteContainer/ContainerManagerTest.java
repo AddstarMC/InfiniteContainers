@@ -1,5 +1,6 @@
 package au.com.addstar.InfiniteContainer;
 
+import au.com.addstar.InfiniteContainer.objects.InfContainer;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -25,12 +26,12 @@ public class ContainerManagerTest {
     private ContainerManager manager;
     private World world;
     private Location loc;
-    private ItemStack[] contents;
+    private InfContainer container;
     @Test
     public void save() throws Exception {
         manager.save();
         assertTrue(manager.containers.size() == 2);
-        assertTrue(manager.containers.get(loc) == contents);
+        assertTrue(manager.containers.get(loc) == container);
     }
 
     public void load() {
@@ -38,7 +39,7 @@ public class ContainerManagerTest {
         manager.containers = null;
         manager.load();
         assertTrue(manager.getContainers().size() == 2);
-        assertTrue(manager.containers.get(loc) == contents);
+        assertTrue(manager.containers.get(loc) == container);
 
     }
 
@@ -56,15 +57,17 @@ public class ContainerManagerTest {
         ItemStack apple = createItem(Material.APPLE);
         ItemStack carrot = createItem(Material.CARROT_ITEM);
         ItemStack potato = createItem(Material.POTATO_ITEM);
-        contents = new ItemStack[]{
+        ItemStack[] contents = new ItemStack[]{
                 apple,
                 carrot
         };
         ItemStack[] c2 = new ItemStack[]{
                 potato
         };
-        manager.containers.put(loc,contents);
-        manager.containers.put(loc2,c2);
+        container = new InfContainer(contents,true, 300L);
+        manager.containers.put(loc,container);
+        InfContainer container2 = new InfContainer(c2,true, 200L);
+        manager.containers.put(loc2,container2);
     }
 
     private ItemStack createItem(Material mat){

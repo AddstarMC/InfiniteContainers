@@ -7,9 +7,15 @@ description: ${project.description}
 
 commands:
   icadd:
-    usage: /<command>
+    usage: /<command> [<automatic> <time>]
+    description: This command will add a container and also set an optional repeating dispense/drop (in seconds)
     permission: infinitecontainer.add
     aliases: [infinitecontaineradd]
+  icupdate:
+    usage: /<command> [<boolean> <time>]
+    description: This will update the contents of the container with a new permanent infinite contents;
+    permission: infinitecontainer.add
+    aliases: [infinitecontainerupdate]
   icremove:
     usage: /<command>
     permission: infinitecontainer.icremove

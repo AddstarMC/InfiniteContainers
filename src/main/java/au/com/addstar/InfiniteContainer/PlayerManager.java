@@ -32,6 +32,10 @@ public class PlayerManager {
         return players.get(player.getUniqueId()).getAction();
     }
 
+    public String[] getArgs(Player player){
+        return players.get(player.getUniqueId()).getArgs();
+    }
+
     public void addPlayer(ICPlayer player){
          players.put(player.getPlayer().getUniqueId(),player);
     }

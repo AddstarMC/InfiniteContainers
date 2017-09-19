@@ -30,19 +30,21 @@ public class TeleportToContainer implements CommandExecutor {
                 if(i==num) {
                     loc = container.getBlock().getLocation();
                 }
+                i++;
             }
             if(loc != null) {
                 Location newLoc = LocationUtils.getSafeDestination(loc);
                 Location teleport = LocationUtils.lookAt(newLoc, loc);
                 player.teleport(teleport, PlayerTeleportEvent.TeleportCause.PLUGIN);
-                sender.sendMessage(InfiniteContainer.plugin.getMessage("TeleportedTo")+num);
+                sender.sendMessage(InfiniteContainer.plugin.getMessage("TeleportedTo",String.valueOf(num)));
+                return true;
             }else{
-                sender.sendMessage(InfiniteContainer.plugin.getMessage("TeleportLocationNull")+num);
+                sender.sendMessage(InfiniteContainer.plugin.getMessage("TeleportLocationNull",String.valueOf(num)));
+                return false;
             }
         }else{
             sender.sendMessage(InfiniteContainer.plugin.getMessage("PlayerCommandOnly"));
             return true;
         }
-        return false;
     }
 }

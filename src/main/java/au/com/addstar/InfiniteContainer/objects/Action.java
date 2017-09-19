@@ -6,5 +6,6 @@ package au.com.addstar.InfiniteContainer.objects;
  */
 public enum Action {
     ADD,
-    REMOVE
+    REMOVE,
+    UPDATE
 }
