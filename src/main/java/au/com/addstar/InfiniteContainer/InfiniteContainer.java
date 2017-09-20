@@ -3,7 +3,9 @@ package au.com.addstar.InfiniteContainer;
 import au.com.addstar.InfiniteContainer.commands.*;
 import au.com.addstar.InfiniteContainer.listeners.BlockListeners;
 import au.com.addstar.InfiniteContainer.listeners.PlayerListeners;
+import au.com.addstar.InfiniteContainer.objects.InfContainer;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,10 +36,10 @@ public class InfiniteContainer extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         pManager = new PlayerManager();
+        ConfigurationSerialization.registerClass(InfContainer.class);
         cManager = new ContainerManager(new File(plugin.getDataFolder(), "containers.yml"));
         cManager.load();
         Metrics metrics = new Metrics(this);
-
         pListen = new PlayerListeners();
         //Register Commands
         this.getServer().getPluginCommand("icadd").setExecutor(new CreateInfiniteContainer(this));

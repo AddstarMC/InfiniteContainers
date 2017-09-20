@@ -4,6 +4,9 @@ import au.com.addstar.InfiniteContainer.objects.InfContainer;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 import org.junit.Before;
@@ -11,6 +14,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.security.spec.ECField;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 import static org.powermock.api.mockito.PowerMockito.mock;
@@ -33,14 +37,25 @@ public class ContainerManagerTest {
         assertTrue(manager.containers.size() == 2);
         assertTrue(manager.containers.get(loc) == container);
     }
-
+    @Test
     public void load() {
         manager.save();
         manager.containers = null;
-        manager.load();
+        File dir = new File(System.getProperty("java.io.tmpdir"));
+        File saveFile = new File(dir,"configuration.yml");
+        ConfigurationSerialization.registerClass(InfContainer.class);
+        ConfigurationSerialization.registerClass(Location.class);
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(saveFile);
+        ConfigurationSerialization.registerClass(InfContainer.class);
+        Object obj = config.get("containers");
+        Map<Location, InfContainer> configContainers = null;
+        if (obj != null) {
+            configContainers = (Map<Location, InfContainer>) obj;
+        }
+        if(configContainers != null)manager.containers.putAll(configContainers);
+        //manager.load();
         assertTrue(manager.getContainers().size() == 2);
         assertTrue(manager.containers.get(loc) == container);
-
     }
 
 
@@ -51,6 +66,7 @@ public class ContainerManagerTest {
         if(saveFile.exists() && !saveFile.delete()) throw new FileNotFoundException();
         manager = new ContainerManager(saveFile);
         world = mock(World.class);
+        when(world.deserialize()).thenReturn(world);
         when(world.getName()).thenReturn("testWorld");
         loc = createLocation(0,0,0);
         Location loc2 = createLocation(1,2,3);

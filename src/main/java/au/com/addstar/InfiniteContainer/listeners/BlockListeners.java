@@ -18,23 +18,25 @@ import static au.com.addstar.InfiniteContainer.InfiniteContainer.plugin;
  */
 public class BlockListeners implements Listener {
 
+    ContainerManager manager = plugin.getContainerManager();
+
     @EventHandler(priority= EventPriority.LOW,ignoreCancelled = true)
     public void onDispenseEvent(BlockDispenseEvent event){
-        BlockState state = event.getBlock().getState();
-        if(state instanceof Container){
-            if(plugin.getContainerManager().hasContainer((Container)state)){
-                plugin.getContainerManager().refill((Container) state, event.getItem());
+        if(manager.hasContainer(event.getBlock().getLocation())){
+            BlockState state = event.getBlock().getState();
+            if(state instanceof Container){
+                manager.refill((Container) state, event.getItem());
             }
         }
     }
     @EventHandler(priority= EventPriority.HIGH,ignoreCancelled = true)
     public void onContainerBreak(BlockBreakEvent e){
-        if(plugin.getContainerManager().hasContainer(e.getBlock().getLocation())){;
+        if(manager.hasContainer(e.getBlock().getLocation())){;
         if(!e.getPlayer().hasPermission("infinitecontainer.icremove")){
             e.setCancelled(true);
             e.getPlayer().sendMessage(plugin.getMessage("NoPermissionRemove"));
         }
-        if(plugin.getContainerManager().removeContainer(e.getBlock().getLocation())){
+        if(manager.removeContainer(e.getBlock().getLocation())){
             e.getPlayer().sendMessage(plugin.getMessage("infiniteContainerRemoved") + e.getBlock().getLocation().toString());
         }
         }
