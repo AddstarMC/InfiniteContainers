@@ -103,7 +103,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <github.global.server>github</github.global.server>
         <spigot.version>1.12.1-R0.1-SNAPSHOT</spigot.version>
-        <powermock.version>1.7.1</powermock.version>
+        <powermock.version>1.7.4</powermock.version>
     </properties>
     <dependencies>
         <dependency>
